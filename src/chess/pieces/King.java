@@ -15,5 +15,12 @@ public class King extends ChessPiece {
 	public String toString() {
 		return "K";//essa k vai entra no tabuleiro como uma piece
 	}
+	
+	//movimentos possiveis de um rei
+	@Override
+	public boolean[][] possibleMoves() {
+		boolean[][] mat = new boolean[getBoard().getRows()][getBoard().getColumns()];
+		return mat;
+	}
 
 }
