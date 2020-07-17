@@ -8,13 +8,25 @@ import chess.pieces.Rook;
 
 //class partida de xadrez
 public class ChessMatch {
-
+	
+	private int turn;
+	private Color currentPlayer; //jogadoratual
 	private Board board;
 
 	public ChessMatch() {
-		// na classe ClessMatch tenho que dizer que o board e 8 por 8
+		// na classe ClessMatch, board e 8 por 
 		board = new Board(8, 8);
+		turn = 1;
+		currentPlayer = Color.WHITE;
 		initialSetup();// chamando o metodo inicio de partida
+	}
+	
+	public int getTurn() {
+		return turn;
+	}
+	
+	public Color getCurrentPlayer() {
+		return currentPlayer;
 	}
 	
 	// retornando a matriz de pieces
@@ -40,6 +52,7 @@ public class ChessMatch {
 		validateSourcePosition(source);
 		validateTargetPosition(source, target);
 		Piece capturedPiece = makeMove(source, target);
+		nextTurn();
 		return (ChessPiece)capturedPiece;
 	}
 	
@@ -55,17 +68,26 @@ public class ChessMatch {
 		if (!board.thereIsAPiece(position)) {
 			throw new ChessException("There is no piece source position");
 		}
+		if (currentPlayer != ((ChessPiece)board.piece(position)).getColor()) {
+			throw new ChessException("The chosen piece is not yours");// A peça escolhida não e sua
+		}
 		if (!board.piece(position).isThereAnyPossibleMove()) {
-			throw new ChessException("there is no possible moves for the chosen piece");
-			                          //Não existe movimento possivel para peça escolhida
+			throw new ChessException("there is no possible moves for the chosen piece");//Não existe movimento possivel para peça escolhida
+			                          
 		}
 	}
 	
 	private void validateTargetPosition(Position source,Position target) {
 		if (!board.piece(source).possibleMove(target)) {
-			throw new ChessException("the chosen piece can't move to target position");
-		}							// A peça escolhida não pode ser move para posição de distino
+			throw new ChessException("the chosen piece can't move to target position");// A peça escolhida não pode ser move para posição de distino
+		}							
 	}
+	
+	private void nextTurn() {
+		turn++;
+		currentPlayer = (currentPlayer == Color.WHITE) ? Color.BLACK : Color.WHITE;
+	}
+	
 	// esse metodo recebe as coordenada do xadrez
 	private void placeNewPiece(char column, int row, ChessPiece piece) {
 		board.placePiece(piece, new ChessPosition(column, row).toPosition());
