@@ -8,6 +8,7 @@ import boardgame.Position;
 public abstract class ChessPiece extends Piece {
 	
 	private Color color;
+	private int moveCount;// mover contagem
 	
 	// board repassa chamada para o construtor da superclass no caso Piece
 	public ChessPiece(Board board, Color color) {
@@ -18,6 +19,17 @@ public abstract class ChessPiece extends Piece {
 	public Color getColor() {
 		return color;
 	}
+	
+	// aumentar contagem de movimentos
+	 public void increaseMoveCount() {
+		 moveCount++;
+	 }
+	 
+	 //diminuir a contagem do movimento
+	 public void decreaseMoveCount() {
+		 moveCount--;
+	 }
+	
 	
 	public ChessPosition getChessPosition() {
 		return ChessPosition.fromPosition(position);
