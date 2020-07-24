@@ -20,6 +20,10 @@ public abstract class ChessPiece extends Piece {
 		return color;
 	}
 	
+	public int getMoveCount() {
+		return moveCount;
+	}
+	
 	// aumentar contagem de movimentos
 	 public void increaseMoveCount() {
 		 moveCount++;
